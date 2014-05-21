@@ -26,8 +26,7 @@ urlpatterns = patterns('lrs.views',
 )
 urlpatterns += patterns('',
   url(r'^accounts/login/$', 'django.contrib.auth.views.login', name="login"),
-  url(r'^accounts/umlogin/$', 'lrs.views.umloginview', name="umlogin"),	#Added
-  url(r'^accounts/umlogin/umauth/$', 'lrs.views.umauth_and_login'),      #Added
-  url(r'^accounts/umlogin/umchecklogin/$', 'lrs.views.umchecklogin_view'),      #Added
+  url(r'^accounts/umlogin/$', 'lrs.views.umlogin_view', name="umlogin"),	#Added
+  url(r'^accounts/umauth/$', 'lrs.views.auth_and_login'),      #Added
   url(r'^accounts/logout/$', 'lrs.views.logout_view', name="logout"),
 )

@@ -1,7 +1,8 @@
 import json
 import logging
 from django.conf import settings
-from django.contrib.auth import authenticate, logout
+from django.contrib.auth import authenticate, logout, login	#Added login
+from django.views.decorators.csrf import csrf_exempt		#Added for umchecklogin_view
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.context_processors import csrf
@@ -9,7 +10,7 @@ from django.core.exceptions import ValidationError
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, redirect #Added redirect
 from django.template import RequestContext
 from django.utils.decorators import decorator_from_middleware
 from django.views.decorators.csrf import csrf_protect
@@ -325,6 +326,55 @@ def delete_token(request):
         return HttpResponse("", status=204)
     except:
         return HttpResponse("Unknown token", status=400)
+
+
+#Login method ?
+
+def umloginview(request):
+        c = {}
+        c.update(csrf(request))
+        return render_to_response('registration/umlogin.html', c)
+
+
+#This is the def that will authenticate the user over the umcloud website
+def umauth_and_login(request, onsuccess='/XAPI/me', onfail='/umlogin'):
+    #Returns user object if parameters match the database.
+    user = authenticate(username=request.POST['username'], password=request.POST['password'])
+    if user is not None:
+        #We Sign the user..
+        login(request, user)
+        return redirect(onsuccess)
+    else:
+        #Show a "incorrect credentials" message
+        return redirect(onfail)
+
+#Check login over post..
+@csrf_exempt
+def umchecklogin_view(request):
+        print("Checking log in details..")
+
+        if request.method == 'POST':
+                print 'POST request recieved.'
+                print 'Login request coming from outside (eXe)'
+                username = request.POST.get('username');
+                password = request.POST.get('password');
+                print "The username is"
+                print username
+
+                #Code for Authenticating the user
+
+                user = authenticate(username=request.POST['username'], password=request.POST['password'])
+                if user is not None:
+                        authresponse = HttpResponse(status=200)
+                        authresponse.write("User: " + username + " authentication a success.")
+                        return authresponse
+                else:
+                        authresponse = HttpResponse(status=403)
+                        authresponse.write("User: " + username + " authentication failed.")
+                        return authresponse
+
+
+## Enf of addition..
 
 def logout_view(request):
     logout(request)

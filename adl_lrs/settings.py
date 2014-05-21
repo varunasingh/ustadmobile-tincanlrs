@@ -18,8 +18,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'lrs',
-        'USER': 'root',
-        'PASSWORD': 'password',
+        'USER': 'adllrs',
+        'PASSWORD': 'lets5GetIt5tartedIn3ere',
         'HOST': 'localhost',
         'PORT': '',
     }    
@@ -95,6 +95,11 @@ OAUTH_AUTHORIZE_VIEW = 'oauth_provider.views.authorize_client'
 OAUTH_CALLBACK_VIEW = 'oauth_provider.views.callback_view'
 OAUTH_SIGNATURE_METHODS = ['plaintext','hmac-sha1','rsa-sha1']
 OAUTH_REALM_KEY_NAME = 'http://localhost:8000/XAPI'
+
+
+#Checks in Django first, then in Custom Backend
+AUTHENTICATION_BACKENDS = ( 'django.contrib.auth.backends.ModelBackend', 'lrs.authbackend.backend.MyCustomBackend', )
+#Added by Varuna Singh 200520142033
 
 # Limit on number of statements the server will return
 SERVER_STMT_LIMIT = 100
