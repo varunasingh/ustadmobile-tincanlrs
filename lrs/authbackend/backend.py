@@ -2,6 +2,7 @@
 from django.contrib.auth.models import User
 from django.contrib import auth
 import xmlrpclib as xmlrpc 	#Used for authenticating against wordpress using xmlrpc client
+import requests		#Used for authenticating against UMCLoudDj using requests that need to be installed to python.
 
 # Name my backend 'MyCustomBackend'
 class MyCustomBackend:
@@ -16,10 +17,18 @@ class MyCustomBackend:
             # Try to find a user matching your username
             user = User.objects.get(username=username)
 
-            #Check user credentials
 
+	    #Check credentials on UMCloudDj
+	    credentials = {'username':username, 'password':password}
+  	    resp = requests.post("http://svr2.ustadmobile.com:8010/checklogin/", data=credentials)
+	    print("Printing test response code:")
+            print(resp.status_code)
+	    """
+            #Check user credentials
             s = xmlrpc.ServerProxy('http://www.ustadmobile.com/xmlrpc.php')     #Getting the xmlrpc link for ustadmobile.com wordpress
             if s.wpse39662.login(username,password):                            #Returns true if user is successfully authenticated, False if not
+	    """
+	    if resp.status_code == 200:
                 print("Username and Password check success against custom backend for user already in DB.")
                 return user;
             else:
@@ -28,28 +37,22 @@ class MyCustomBackend:
 
             return None
 
-            """
-            #Check username and password here..
-            #  Check the password is the reverse of the username
-            if password == username[::-1]:
-                # Yes? return the Django user object
-                print("Username and Password check success for existing DB. ")
-                return use
-            else:
-                # No? return None - triggers default login failed
-                print("Username and Password check unsuccessfull for existing DB. Check password.")
-                return None
-           """
-
-
         except User.DoesNotExist:
             # No user was found, return None - triggers default login failed
 	    print("User Does Not Exists in UM LRS DB")
+	
+	    #Check credentials on UMCloudDj
+            credentials = {'username':username, 'password':password}
+            resp = requests.post("http://svr2.ustadmobile.com:8010/checklogin/", data=credentials)
+            print("Printing test response code:")
+            print(resp.status_code)
 
+	    """
 	    #Check user credentials
-
 	    s = xmlrpc.ServerProxy('http://www.ustadmobile.com/xmlrpc.php')	#Getting the xmlrpc link for ustadmobile.com wordpress
 	    if s.wpse39662.login(username,password):				#Returns true if user is successfully authenticated, False if not
+	    """
+	    if resp.status_code == 200:
 	    	print("Username and Password check success for new user.")
 		print("Checking new user in Django..")
 		#Create user.
