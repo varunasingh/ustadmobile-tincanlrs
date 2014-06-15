@@ -337,7 +337,7 @@ def umloginview(request):
 
 
 #This is the def that will authenticate the user over the umcloud website
-def umauth_and_login(request, onsuccess='/XAPI/me', onfail='/umlogin'):
+def umauth_and_login(request, onsuccess='/XAPI/me', onfail='/XAPI/accounts/umlogin'):
     #Returns user object if parameters match the database.
     user = authenticate(username=request.POST['username'], password=request.POST['password'])
     if user is not None:

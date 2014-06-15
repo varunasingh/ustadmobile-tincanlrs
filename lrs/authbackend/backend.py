@@ -12,23 +12,39 @@ class MyCustomBackend:
     def authenticate(self, username=None, password=None):
 
         try:
+            print("Checking if user exists in local UM LRS DB")
             # Try to find a user matching your username
             user = User.objects.get(username=username)
-	    
-	    #Check username and password here..
+
+            #Check user credentials
+
+            s = xmlrpc.ServerProxy('http://www.ustadmobile.com/xmlrpc.php')     #Getting the xmlrpc link for ustadmobile.com wordpress
+            if s.wpse39662.login(username,password):                            #Returns true if user is successfully authenticated, False if not
+                print("Username and Password check success against custom backend for user already in DB.")
+                return user;
+            else:
+                print ("Username and Password against custom backend un successful for already created user in DB-UM-LRS")
+                return None;
+
+            return None
+
+            """
+            #Check username and password here..
             #  Check the password is the reverse of the username
             if password == username[::-1]:
                 # Yes? return the Django user object
-		print("Username and Password check success")
-                return user
+                print("Username and Password check success for existing DB. ")
+                return use
             else:
                 # No? return None - triggers default login failed
-		print("Username and Password check unsuccessfull")
+                print("Username and Password check unsuccessfull for existing DB. Check password.")
                 return None
+           """
+
 
         except User.DoesNotExist:
             # No user was found, return None - triggers default login failed
-	    print("User Does Not Exists")
+	    print("User Does Not Exists in UM LRS DB")
 
 	    #Check user credentials
 
@@ -41,7 +57,7 @@ class MyCustomBackend:
         	if user_count == 0:
 			print ("User doesn't exist, creating user..")
 			user = User(username=username, email=username)
-    			user.set_password(password)
+    			#user.set_password(password)
     			user.save()
 			print("User created!")
         		#return auth_and_login(request)

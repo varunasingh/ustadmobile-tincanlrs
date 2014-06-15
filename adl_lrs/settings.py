@@ -19,7 +19,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'lrs',
         'USER': 'adllrs',
-        'PASSWORD': 'lets5GetIt5tartedIn3ere',
+        'PASSWORD': 'mLearnDB2014APd',
         'HOST': 'localhost',
         'PORT': '',
     }    
@@ -98,7 +98,10 @@ OAUTH_REALM_KEY_NAME = 'http://localhost:8000/XAPI'
 
 
 #Checks in Django first, then in Custom Backend
-AUTHENTICATION_BACKENDS = ( 'django.contrib.auth.backends.ModelBackend', 'lrs.authbackend.backend.MyCustomBackend', )
+#removed Django's auth backend model..
+AUTHENTICATION_BACKENDS = ( 'lrs.authbackend.backend.MyCustomBackend', )
+#AUTHENTICATION_BACKENDS = ( 'django.contrib.auth.backends.ModelBackend', 'lrs.authbackend.backend.MyCustomBackend', )
+
 #Added by Varuna Singh 200520142033
 
 # Limit on number of statements the server will return
@@ -128,7 +131,7 @@ STATICFILES_FINDERS = (
 )
 
 # Make this unique, and don't share it with anybody.
-SECRET_KEY = 'v+m%^r0x)$_x8i3trn*duc6vd-yju0kx2b#9lk0sn2k^7cgyp5'
+SECRET_KEY = 'v+m%^r0x)$!E#*#($()@E2b#9lk0sn2k^7c43/|/|3@/|/|/|/0|= |_||=3'
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
