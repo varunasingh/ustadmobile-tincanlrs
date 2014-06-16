@@ -20,7 +20,7 @@ class MyCustomBackend:
 
 	    #Check credentials on UMCloudDj
 	    credentials = {'username':username, 'password':password}
-  	    resp = requests.post("http://svr2.ustadmobile.com:8010/checklogin/", data=credentials)
+  	    resp = requests.post("http://54.72.83.134:8010/checklogin/", data=credentials)
 	    print("Printing test response code:")
             print(resp.status_code)
 	    """
@@ -43,7 +43,7 @@ class MyCustomBackend:
 	
 	    #Check credentials on UMCloudDj
             credentials = {'username':username, 'password':password}
-            resp = requests.post("http://svr2.ustadmobile.com:8010/checklogin/", data=credentials)
+            resp = requests.post("http://54.72.83.134:8010/checklogin/", data=credentials)
             print("Printing test response code:")
             print(resp.status_code)
 
