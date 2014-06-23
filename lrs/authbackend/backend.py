@@ -17,7 +17,6 @@ class MyCustomBackend:
             # Try to find a user matching your username
             user = User.objects.get(username=username)
 
-
 	    #Check credentials on UMCloudDj
 	    credentials = {'username':username, 'password':password}
   	    resp = requests.post("http://54.72.83.134:8010/checklogin/", data=credentials)
@@ -33,6 +32,13 @@ class MyCustomBackend:
                 return user;
             else:
                 print ("Username and Password against custom backend un successful for already created user in DB-UM-LRS")
+		if user.is_superuser:
+			print("User is an admin or a superuser.")
+			#Authenticate user against local DB...
+			#return user;
+		else:
+			print("User isn't a superuser/admin. Returning false")
+			return None
                 return None;
 
             return None
