@@ -18,8 +18,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'lrs',
-        'USER': 'adllrs',
-        'PASSWORD': 'lets5GetIt5tartedIn3ere',
+        'USER': 'EnterUserNameHere',
+        'PASSWORD': 'EnterPasswordHere',
         'HOST': 'localhost',
         'PORT': '',
     }    
@@ -131,7 +131,7 @@ STATICFILES_FINDERS = (
 )
 
 # Make this unique, and don't share it with anybody.
-SECRET_KEY = 'v+m%^r0x)$!E#*#($()@E2b#9lk0sn2k^7c43/|/|3@/|/|/|/0|= |_||=3'
+SECRET_KEY = 'EnterSecretKeyHere'
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
