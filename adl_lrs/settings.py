@@ -99,7 +99,8 @@ OAUTH_REALM_KEY_NAME = 'http://localhost:8000/XAPI'
 
 #Checks in Django first, then in Custom Backend
 #removed Django's auth backend model..
-AUTHENTICATION_BACKENDS = ( 'django.contrib.auth.backends.ModelBackend', 'lrs.authbackend.backend.MyCustomBackend', )
+AUTHENTICATION_BACKENDS = ( 'lrs.authbackend.backend.MyCustomBackend','django.contrib.auth.backends.ModelBackend', )
+#AUTHENTICATION_BACKENDS = ( 'django.contrib.auth.backends.ModelBackend', 'lrs.authbackend.backend.MyCustomBackend', )
 #AUTHENTICATION_BACKENDS = ( 'django.contrib.auth.backends.ModelBackend', 'lrs.authbackend.backend.MyCustomBackend', )
 
 #ngo.contrib.auth.backends.ModelBackend', Added by Varuna Singh 200520142033
